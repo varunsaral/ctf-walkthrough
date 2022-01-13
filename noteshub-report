@@ -1,0 +1,49 @@
+Hello , This is a security report of a assesment coducted on subdomain of 
+http://noteshub.co.in , which is api.noteshub.co.in and i found several serious
+vulnerbilites in the website, explaining each of them and how they can be fixed
+
+1) API routes exposed too much sensitive information , while visiting 
+http://api.noteshub.co.in , one can see the whole structure of API without any 
+filtering which includes lumen logs , which ultimately leaks the underlying 
+technology used in website with it's version (Lumen 5.5.2)
+
+2)Outdated software , Lumen 5.5.2 is outdated and contain several vulnerbilites
+one of them is info leak , if anyone make a GET request on 
+http://api.noteshub.co.in/.env , it leaks the most sensitive part of webisite
+
+Listing the leaked information here
+
+APP_KEY=540a0a29f96e4d9262467450815ef24a087f96ca019a39cc689eb86xxxxxxxx
+
+MASTER_ADMIN_USER_EMAIL=master@noteshub
+MASTER_ADMIN_USER_AUTHKEY=p@ss4M@ster
+
+DB_DATABASE=noteshub_prod
+DB_USERNAME=noteshub_db_user
+DB_PASSWORD=k4fMwcKMqW53pjdu
+
+JWT_SECRET=592d2bef45b3eadc07c8c8d9963ada4547d6a9fc379f6090xxxxxxxxxxxxx
+
+we all know they are the most important part of a website , moreover with
+app key and a script https://github.com/kozmic/laravel-poc-CVE-2018-15133 , one 
+can get a remote access to the machine on which noteshub is hosted and can result
+in massive date leak.
+
+With JWT too all private api can be accessed , with database user/pass the student
+details can be leaked and with admin user/pass too
+
+suggested fix:
+
+Secure API with filtering :https://restfulapi.net/security-essentials/
+Updated softwares:https://github.com/laravel/lumen
+
+And one deep level pentest on website i have only scartched the surface.
+(Attached screenshot with email)
+
+At the end , I want to thank the whole community of noteshub to supporting the
+student community 
+
+@@Report by
+--Varun kumar
+  Maharaja agrasen institute of technology (IPU)
+  3rd year B.Tech (IT)
